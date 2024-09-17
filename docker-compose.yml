@@ -1,0 +1,54 @@
+services:
+    db:
+        image: mysql:5.7
+        platform: linux/amd64
+        container_name: mysql-wordpress
+        ports: 
+            - "3307:3306"
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_DATABASE: dbMushroom
+            MYSQL_PASSWORD: 1234
+            MYSQL_USER: user
+            MYSQL_ROOT_PASSWORD: 1234 
+        volumes:
+            - vol_db:/var/lib/mysql    # Cambiado para usar solo un volumen
+        networks:
+            - wpsite
+            
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        platform: linux/amd64
+        links: 
+            - db:db
+        ports:
+            - "4282:80"
+        environment:
+            PMA_HOST: db               # Configura correctamente el host para conectar a MySQL
+            MYSQL_ROOT_PASSWORD: 1234   # Asegúrate de usar el root para conectar
+        networks:
+            - wpsite
+
+    wordpress:
+        depends_on:
+            - db
+        image: wordpress:latest
+        ports:
+            - '4283:80'
+        restart: always
+        volumes: 
+          - ./var/www/html:/var/www/html
+        environment:
+            WORDPRESS_DB_HOST: mysql-wordpress:3306  # Asegúrate de que incluya el puerto
+            WORDPRESS_DB_NAME: dbMushroom
+            WORDPRESS_DB_USER: user
+            WORDPRESS_DB_PASSWORD: 1234
+        networks:
+            - wpsite
+
+networks:
+    wpsite:            
+
+volumes:
+    vol_public:
+    vol_db:
