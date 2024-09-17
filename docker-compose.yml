@@ -37,7 +37,7 @@ services:
             - '4283:80'
         restart: always
         volumes: 
-          - ./var/www/html:/var/www/html
+         - wordpress_data:/var/www/html
         environment:
             WORDPRESS_DB_HOST: mysql-wordpress:3306  # Asegúrate de que incluya el puerto
             WORDPRESS_DB_NAME: dbMushroom
