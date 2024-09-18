@@ -44,16 +44,17 @@ if (!function_exists('getenv_docker')) {
 
 
 *//
-define( 'DB_NAME', getenv('DB_NAME') );
+/** The name of the database for WordPress */
+define( 'DB_NAME', getenv('MYSQL_DATABASE') );
 
 /** Database username */
-define( 'DB_USER', getenv('DB_USER') );
+define( 'DB_USER', getenv('MYSQL_USER') );
 
 /** Database password */
-define( 'DB_PASSWORD', getenv('DB_PASSWORD') );
+define( 'DB_PASSWORD', getenv('MYSQL_PASSWORD') );
 
 /** Database hostname (host and port combined) */
-define( 'DB_HOST', getenv('DB_HOST') . ':' . getenv('DB_PORT') );
+define( 'DB_HOST', getenv('MYSQL_HOST') . ':' . getenv('MYSQL_PORT') );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8' );
