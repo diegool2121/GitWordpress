@@ -52,3 +52,4 @@ networks:
 volumes:
     vol_public:
     vol_db:
+    wordpress_data:
